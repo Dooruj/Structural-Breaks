@@ -1,0 +1,12 @@
+setwd("C:/Users/dramb/OneDrive/Research/Bill_Russell/Structural Breaks Codes/R")
+Data = read.csv(file="USqtlydata.csv", head=TRUE, sep=",")
+library(changepoint)
+
+inflation.ts = ts(Data[3], frequency=4, start=c(1959,4), end=c(2015,2))
+inflation.ts = inflation.ts[complete.cases(inflation.ts)]
+
+ansmean=cpt.meanvar(inflation.ts,penalty="SIC",pen.value=0,method="PELT",Q=15,test.stat="Normal",class=TRUE,param.estimates=TRUE,minseglen=1)
+plot(ansmean,cpt.col='red')
+#This is going to give us the Break Date
+cpts.ts(ansmean)
+

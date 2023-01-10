@@ -1,0 +1,36 @@
+rm(list=ls())
+library(changepoint)
+setwd("C:/Users/drambaccussing/OneDrive/Research/Bill_Russell/Structural Breaks Codes/R")
+Data = read.csv(file="USqtlydata.csv", head=TRUE, sep=",")
+dlipdfc = ts(Data[5], frequency=4, start=c(1959,4), end=c(2015,2))
+dlipdfc = dlipdfc[complete.cases(dlipdfc)]
+dlipdfc.ts=ts(dlipdfc, frequency=4, start=c(1960,1), end=c(2015,2))
+
+##################################################################################################################################################
+
+
+A=cpt.meanvar(dlipdfc.ts,penalty="BIC", pen.value=0, method="PELT", test.stat="Normal",class=TRUE,param.estimates=TRUE,minseglen=8)
+plot(A,cpt.col='red',cpt.width=3 )
+B=coef(A)
+cpts.ts(A)
+##
+C=cpt.meanvar(dlipdfc.ts,penalty="MBIC", pen.value=0, method="PELT", test.stat="Normal",class=TRUE,param.estimates=TRUE,minseglen=8)
+plot(C,cpt.col='red',cpt.width=3)
+D=coef(C)
+cpts.ts(C)
+##
+G=cpt.meanvar(dlipdfc.ts,penalty="Hannan-Quinn", pen.value=0, method="PELT", test.stat="Normal",class=TRUE,param.estimates=TRUE,minseglen=8)
+plot(G,cpt.col='red',cpt.width=3)
+H=coef(G) 
+cpts.ts(G)
+##
+G=cpt.meanvar(dlipdfc.ts,penalty="SIC", pen.value=0, method="PELT", test.stat="Normal",class=TRUE,param.estimates=TRUE,minseglen=8)
+plot(G,cpt.col='red',cpt.width=3)
+H=coef(G) 
+cpts.ts(G)
+##
+G=cpt.meanvar(dlipdfc.ts,penalty="None", pen.value=0, method="PELT", test.stat="Normal",class=TRUE,param.estimates=TRUE,minseglen=8)
+plot(G,cpt.col='red',cpt.width=3)
+H=coef(G) 
+cpts.ts(G)
+##
